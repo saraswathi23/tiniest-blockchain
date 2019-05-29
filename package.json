@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/saraswathi23/tiniest-blockchain#readme",
   "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.5.11",
     "sha256": "^0.2.0"
   }
 }

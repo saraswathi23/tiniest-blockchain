@@ -20,22 +20,28 @@ class Block {
         return sha256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data).toString());
     }
 }
-
+const gensisBlock = new Block(0, Date.now(), "Genesis Block", "0");
+const blockchains = [gensisBlock];
 class Blockchain{
-    constructor(){
-        this.chain = [this.createGenesisBlock()];
+     constructor(){
+        //this.chain = [this.createGenesisBlock()];
+        console.log(blockchains);
     }
-    createGenesisBlock(){
+    /* createGenesisBlock(){
         return new Block(0, Date.now(), "Genesis Block", "0");
-    }
+    } */
     getLatestBlock(){
-        return this.chain[this.chain.length - 1];
+        return blockchains[blockchains.length - 1];
     }
-    addBlock(newBlock){
-        newBlock.index = this.getLatestBlock().index + 1;
+    addBlock(datas){
+        const newBlock = new Block(this.getLatestBlock().index + 1, Date.now(), datas);
+        //newBlock.index = this.getLatestBlock().index + 1;
         newBlock.previousHash = this.getLatestBlock().hash;
         newBlock.hash = newBlock.calculateHash();
-        this.chain.push(newBlock);
+        
+        blockchains.push(newBlock);
+        console.log(blockchains);
+        
     }
 }
 
@@ -50,13 +56,11 @@ app.post("/addblock", (req, res) => {
         'toAddress' : 'ghijklm',
         'amount' : 10
     }; */
-    userCoin.addBlock(new Block(1, Date.now(), myData));
-    console.log(JSON.stringify(userCoin, null, 2));
-    res.send(userCoin);
+    userCoin.addBlock(myData);
+    res.send(blockchains);
 });
 app.get("/blocklist", function(req, res){
-    let dataList = new Blockchain();
-    res.send(dataList.chain);
+    res.send(blockchains);
 });
 app.listen(port, function(){
     console.log("Server listening on port " + port);

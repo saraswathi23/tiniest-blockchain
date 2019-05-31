@@ -51,11 +51,7 @@ app.get("/", (req, res) => {
 app.post("/addblock", (req, res) => {
     var myData = req.body;
     let userCoin = new Blockchain();
-    /* let myData = {
-        'fromAddress' : 'abccdef',
-        'toAddress' : 'ghijklm',
-        'amount' : 10
-    }; */
+    
     userCoin.addBlock(myData);
     res.send(blockchains);
 });
@@ -64,4 +60,4 @@ app.get("/blocklist", function(req, res){
 });
 app.listen(port, function(){
     console.log("Server listening on port " + port);
-  });
+});
